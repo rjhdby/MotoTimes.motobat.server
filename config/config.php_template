@@ -1,6 +1,6 @@
-<?php /*?> НЕ УБИРАТЬ!!!!!
+<?php /* НЕ УБИРАТЬ!!!!!
 #Реквизиты сервера БД
-db.login      = motodonor_mysql
-db.password   = Dg7byR-m
-db.host       = motodonor.mysql
-db.db         = motodonor_mobile
+db.login      =
+db.password   =
+db.host       =
+db.db         =

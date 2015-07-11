@@ -12,7 +12,7 @@ class GetList extends Core
             '
           SELECT
               id,
-              owner,
+              userid AS owner,
               UNIX_TIMESTAMP(created) AS created,
               lat,
               lng,

@@ -13,7 +13,7 @@ function __autoload ( $class_name ) {
 switch ( mb_strtolower ( $_POST [ 'method' ] ) ) {
     case 'getrole':
         $response = new Role( $_POST );
-        $response->getRole ();
+        $response->readRole ();
         break;
     case 'setrole':
         $response = new Role( $_POST );
@@ -22,6 +22,9 @@ switch ( mb_strtolower ( $_POST [ 'method' ] ) ) {
     case 'getlist':
         $response = new GetList();
         $response->getlist ();
+        break;
+    case 'create':
+        $response = new CreatePoint( $_POST );
         break;
     default :
         $response = new WrongMethod( $_POST );

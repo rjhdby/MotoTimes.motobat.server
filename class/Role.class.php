@@ -12,7 +12,7 @@ class Role
     public function setRole () {
         $this->setPrerequisites ( 'userid,role' );
         if ( !$this->checkPrerequisites () ) return false;
-        $this->getRole ();
+        $this->readRole ();
         $current = $this->getResult ();
         $current = $current[ 'role' ];
 
@@ -42,7 +42,7 @@ class Role
         return true;
     }
 
-    public function getRole () {
+    public function readRole () {
         $db    = new DB();
         $query = /** @lang MySQL */
             'SELECT role FROM mototimes_users WHERE id_vk=?';
@@ -90,5 +90,10 @@ class Role
         $this->setError ();
         $this->setErrorText ( "NO USER" );
         $this->setErrorObject ( $this->get ( 'userid' ) );
+    }
+
+    public function getRole () {
+        $result = $this->getResult ();
+        return $result[ 'role' ];
     }
 }

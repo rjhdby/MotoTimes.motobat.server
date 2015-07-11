@@ -7,26 +7,30 @@ class Role
     {
         parent::__construct($data);
         $this->setPrerequisites('userid');
-        $this->checkPrerequisites() && $this->setId($this->get('userid'));
+        $this->checkPrerequisites();
     }
 
     public function getRole()
     {
-        $db    = new DB();
+        $db = new DB();
         $query = /** @lang MySQL */
             'SELECT role FROM mototimes_users WHERE id_vk=?';
-        $stmt  = $db->prepare($query);
-        $stmt->bind_param('s', $this->get('userid'));
+        $stmt = $db->prepare($query);
+        $stmt->bind_param('i', $this->get('userid'));
         $stmt->execute();
         $result = $stmt->get_result();
         if ($result->num_rows == 0) {
-            $this->noUserError();
+            $this->newUser();
+            $role = 'standart';
+
         } else {
-            $result = array(
-                'role' => implode($result->fetch_row())
-            );
-            $this->setResult($result);
+            $role = implode($result->fetch_row());
         }
+        $db->close();
+        $result = array(
+            'role' => $role
+        );
+        $this->setResult($result);
     }
 
     public function setRole()
@@ -38,16 +42,16 @@ class Role
         $current = $current['role'];
 
         if ($this->get('role') == $current) {
-            $this->alredyInRoleError();
+            $this->alreadyInRoleError();
 
             return false;
         };
 
-        $db    = new DB();
+        $db = new DB();
         $query = /** @lang MySQL */
             'UPDATE mototimes_users SET role=? WHERE id_vk=?';
-        $stmt  = $db->prepare($query);
-        $stmt->bind_param('ss', $this->get('role'), $this->get('userid'));
+        $stmt = $db->prepare($query);
+        $stmt->bind_param('si', $this->get('role'), $this->get('userid'));
         $stmt->execute();
         if ($stmt->affected_rows == 0) {
             $this->noUserError();
@@ -57,13 +61,8 @@ class Role
             );
             $this->setResult($result);
         }
-
+        $db->close();
         return true;
-    }
-
-    private function setId($id)
-    {
-        $this->id = $id;
     }
 
     private function noUserError()
@@ -73,10 +72,21 @@ class Role
         $this->setErrorObject($this->get('userid'));
     }
 
-    private function alredyInRoleError()
+    private function alreadyInRoleError()
     {
         $this->setError();
         $this->setErrorText("ALREADY IN ROLE");
         $this->setErrorObject($this->get('role'));
+    }
+
+    private function newUser()
+    {
+        $db = new DB();
+        $query = /** @lang MySQL */
+            'INSERT INTO mototimes_users (id_vk, name, role) VALUES(?,"new user","standart")';
+        $stmt = $db->prepare($query);
+        $stmt->bind_param('i', $this->get('userid'));
+        $stmt->execute();
+        $db->close();
     }
 }

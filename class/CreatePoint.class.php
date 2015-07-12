@@ -5,7 +5,7 @@ class CreatePoint extends Core
 {
     function __construct ( $data ) {
         parent::__construct ( $data );
-        $this->setPrerequisites ( 'userid,lat,lng' );
+        $this->setPrerequisites ( 'userid,lat,lng,name' );
         if ( $this->checkPrerequisites () ) {
             $this->addPoint ();
         }
@@ -19,9 +19,9 @@ class CreatePoint extends Core
         } else {
             $db    = new DB();
             $query = /** @lang MySQL */
-                'INSERT INTO mototimes_events (userid, lat, lng) VALUES(?,?,?)';
+                'INSERT INTO mototimes_events (userid, lat, lng, name) VALUES(?,?,?,?)';
             $stmt  = $db->prepare ( $query );
-            $stmt->bind_param ( 'idd', $this->get ( 'userid' ), $this->get ( 'lat' ), $this->get ( 'lng' ) );
+            $stmt->bind_param ( 'idds', $this->get ( 'userid' ), $this->get ( 'lat' ), $this->get ( 'lng' ) , $this->get('name'));
             $stmt->execute ();
             if ( $stmt->errno != 0 ) {
                 $this->unknownError ();

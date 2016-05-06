@@ -12,19 +12,26 @@ function __autoload ( $class_name ) {
 
 switch ( mb_strtolower ( $_POST [ 'method' ] ) ) {
     case 'getrole':
-        $response = new Role( $_POST );
+        $response = new User( $_POST );
         $response->readRole ();
         break;
     case 'setrole':
-        $response = new Role( $_POST );
+        $response = new User( $_POST );
         $response->setRole ();
         break;
     case 'getlist':
         $response = new GetList();
-        $response->getlist ();
+        $response->getList ();
         break;
     case 'create':
         $response = new CreatePoint( $_POST );
+        break;
+    case 'cpk':
+        $response = new Point( $_POST );
+        $response->changeKarma ();
+        break;
+    case 'createyandexpoint':
+        $response = new CreateYandexPoint( $_POST );
         break;
     default :
         $response = new WrongMethod( $_POST );

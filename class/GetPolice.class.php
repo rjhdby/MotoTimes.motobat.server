@@ -1,6 +1,6 @@
 <?php
 
-class GetList
+class GetPolice
     extends Core
 {
     function __construct()
@@ -24,7 +24,6 @@ class GetList
               a.transport,
               a.text,
               b.name,
-              a.type,
               IFNULL(a.yandex_id, "") AS yandex_id
           FROM
               mototimes_events a, mototimes_users b
@@ -52,8 +51,7 @@ class GetList
                     'transport' => $row['transport'],
                     'name' => $row['name'],
                     'yandex_id' => $row['yandex_id'],
-                    'text' => $row['text'],
-                    'type' => $row['type']
+                    'text' => $row['text']
                 );
             }
         }

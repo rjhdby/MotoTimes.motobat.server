@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="SqlDialectMappings">
+    <file url="file://$PROJECT_DIR$/class/CreateYandexPoint.class.php" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/class/Point.class.php" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/class/User.class.php" dialect="MySQL" />
+  </component>
+</project>

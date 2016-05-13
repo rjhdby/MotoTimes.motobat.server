@@ -22,7 +22,8 @@ class GetList implements Request
               CASE transport
               WHEN 1 THEN "GS"
               WHEN 2 THEN "RT"
-              WHEN 2 THEN "CAR"
+              WHEN 3 THEN "CAR"
+              ELSE "GS"
               END AS type,
               `text`
           FROM
